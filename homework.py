@@ -33,11 +33,14 @@ handler.setFormatter(
 
 
 def send_message(bot, message):
+    """Функция отправляет сообщение в Telegram чат"""
     bot.send_message(TELEGRAM_CHAT_ID, message)
     logger.info(f'Бот отправил сообщение "{message}')
 
 
 def get_api_answer(current_timestamp):
+    """Функция делает запрос к эндпоинту API-сервиса. В качестве параметра
+     функция получает временную метку."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -49,29 +52,34 @@ def get_api_answer(current_timestamp):
                         f"{response.status_code}")
             return hw_statuses
         else:
-            raise (f"Ошибка! Статус код ответа API: {response.status_code}")
+            raise f"Ошибка! Статус код ответа API: {response.status_code}"
     except Exception:
         raise Exception(f"Сбой в работе программы: Эндпоинт {ENDPOINT} "
                         f"недоступен.Код ответа API: {response.status_code}")
 
 
 def check_response(response):
+    """Функция проверяет ответ API на корректность. В качестве параметра
+     функция получает ответ API, приведенный к типам данных Python"""
     if type(response) is not dict:
         logger.error("В ответе API тип данных не DICT!")
         raise TypeError("В ответе API тип данных не DICT!")
     try:
-        list = response['homeworks']
+        list_home = response['homeworks']
     except KeyError:
         logger.error("Ошибка при запросе к ключу homeworks")
         raise KeyError("Ошибка при запросе к ключу homeworks")
     try:
-        homework = list[0]
+        homework = list_home[0]
     except IndexError:
         raise IndexError("Список homeworks пуст")
     return homework
 
 
 def parse_status(homework):
+    """Функция извлекает из информации о конкретной домашней работе
+    название и статус этой работы. В качестве параметра функция получает только
+     один элемент из списка домашних работ."""
     if isinstance(homework, dict):
         homework_name = homework['homework_name']
         homework_status = homework['status']
@@ -89,6 +97,9 @@ def parse_status(homework):
 
 
 def parse_current_date(homework):
+    """Функция извлекает время отправки API ответа.
+    В качестве параметра функция получает только один элемент
+     из списка домашних работ."""
     current_date = homework['current_date']
     if 'current_date' not in homework:
         logger.error("Нет ключа current_date в ответе API")
@@ -97,6 +108,8 @@ def parse_current_date(homework):
 
 
 def check_tokens():
+    """Функция проверяет доступность переменных окружения,
+     которые необходимы для работы программы."""
     if not PRACTICUM_TOKEN or not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         return False
     return True
