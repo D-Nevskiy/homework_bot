@@ -97,7 +97,7 @@ def parse_status(homework):
         raise KeyError("Нет ключа status в ответе API")
     if homework_status not in HOMEWORK_STATUSES:
         logger.error("Неизвестный статус работы")
-        raise KeyError(f"Неизвестный статус работы")
+        raise KeyError("Неизвестный статус работы")
     verdict = HOMEWORK_STATUSES[homework_status]
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
