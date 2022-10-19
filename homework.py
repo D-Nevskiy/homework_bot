@@ -110,7 +110,7 @@ def main():
     if check_tokens() is True:
         while True:
             try:
-                response_api = get_api_answer(-1)
+                response_api = get_api_answer(current_timestamp)
                 current_timestamp = parse_current_date(response_api)
                 check = check_response(response_api)
                 message = parse_status(check)
