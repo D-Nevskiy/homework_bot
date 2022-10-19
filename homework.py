@@ -117,9 +117,7 @@ def parse_current_date(homework):
 
 
 def check_tokens():
-    """
-    Функция проверяет доступность переменных окружения необходимые для работы.
-    """
+    """Функция проверяет доступность токенов необходимые для работы."""
     if not PRACTICUM_TOKEN or not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         return False
     return True
