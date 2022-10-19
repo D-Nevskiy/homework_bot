@@ -39,8 +39,10 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """Функция делает запрос к эндпоинту API-сервиса. В качестве параметра
-     функция получает временную метку."""
+    """
+    Функция делает запрос к эндпоинту API-сервиса.
+    В качестве параметра функция получает временную метку.
+     """
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -59,8 +61,10 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """Функция проверяет ответ API на корректность. В качестве параметра
-     функция получает ответ API, приведенный к типам данных Python"""
+    """
+    Функция проверяет ответ API на корректность. В качестве параметра
+    функция получает ответ API, приведенный к типам данных Python
+    """
     if type(response) is not dict:
         logger.error("В ответе API тип данных не DICT!")
         raise TypeError("В ответе API тип данных не DICT!")
@@ -77,9 +81,11 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Функция извлекает из информации о конкретной домашней работе
-    название и статус этой работы. В качестве параметра функция получает только
-     один элемент из списка домашних работ."""
+    """
+    Функция извлекает из информации о конкретной домашней работе название
+    и статус этой работы. В качестве параметра функция получает только
+    один элемент из списка домашних работ.
+     """
     if isinstance(homework, dict):
         homework_name = homework['homework_name']
         homework_status = homework['status']
@@ -97,9 +103,11 @@ def parse_status(homework):
 
 
 def parse_current_date(homework):
-    """Функция извлекает время отправки API ответа.
+    """
+    Функция извлекает время отправки API ответа.
     В качестве параметра функция получает только один элемент
-     из списка домашних работ."""
+    из списка домашних работ.
+    """
     current_date = homework['current_date']
     if 'current_date' not in homework:
         logger.error("Нет ключа current_date в ответе API")
@@ -108,8 +116,10 @@ def parse_current_date(homework):
 
 
 def check_tokens():
-    """Функция проверяет доступность переменных окружения,
-     которые необходимы для работы программы."""
+    """
+    Функция проверяет доступность переменных окружения,
+    которые необходимы для работы программы.
+    """
     if not PRACTICUM_TOKEN or not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         return False
     return True
