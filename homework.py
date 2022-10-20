@@ -36,7 +36,7 @@ handler.setFormatter(
 
 def send_message(bot, message):
     """Функция отправляет сообщение в Telegram чат."""
-    logger.debug(f'Отправляю сообщение в телеграм!')
+    logger.debug('Отправляю сообщение в телеграм!')
     try:
         bot.send_message(TELEGRAM_CHAT_ID, message)
     except Exception as error:
@@ -50,7 +50,7 @@ def get_api_answer(current_timestamp):
     Функция делает запрос к эндпоинту API-сервиса.
     В качестве параметра функция получает временную метку.
     """
-    logger.debug(f'Отправляю запрос в API Я.Практикума')
+    logger.debug('Отправляю запрос в API Я.Практикума')
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     params2 = {'url': ENDPOINT, 'headers': HEADERS, 'params': params}
@@ -71,7 +71,7 @@ def check_response(response):
     В качестве параметра функция получает ответ API,
     приведенный к типам данных Python.
     """
-    logger.debug(f'Проверяю ответ API на корректность.')
+    logger.debug('Проверяю ответ API на корректность.')
     if not isinstance(response, dict):
         raise TypeError(f"Ошибка типа в response: {type(response)}")
     if 'homeworks' not in response:
@@ -92,7 +92,7 @@ def parse_status(homework):
     В качестве параметра функция получает только
     один элемент из списка домашних работ.
     """
-    logger.debug(f'Извлекаю из ответа API название и статус ДЗ')
+    logger.debug('Извлекаю из ответа API название и статус ДЗ')
     if 'homework_name' not in homework:
         raise KeyError(f"Нет ключа homework_name в ответе API | {homework}")
     if 'status' not in homework:
@@ -112,7 +112,7 @@ def parse_current_date(homework):
     В качестве параметра функция получает только один элемент
     из списка домашних работ.
     """
-    logger.debug(f'Извлекаю из ответа время отправки API')
+    logger.debug('Извлекаю из ответа время отправки API')
     current_date = homework['current_date']
     if 'current_date' not in homework:
         raise KeyError(f"Нет ключа current_date в ответе API | {homework}")
@@ -121,8 +121,8 @@ def parse_current_date(homework):
 
 
 def check_tokens():
-    logger.debug(f'Проверяю доступность токенов!')
     """Функция проверяет доступность токенов необходимые для работы."""
+    logger.debug('Проверяю доступность токенов!')
     if not PRACTICUM_TOKEN or not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         return False
     logger.debug("Все токены валидны!")
