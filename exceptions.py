@@ -12,3 +12,7 @@ class ErrorEndPoint(Exception):
 
 class EmptyList(Exception):
     pass
+
+
+class ErrorRequestToAPI(Exception):
+    pass
